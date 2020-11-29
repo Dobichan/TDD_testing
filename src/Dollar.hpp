@@ -3,7 +3,7 @@
 class Dollar
 {
   public:
-    int amount{10};
+    int amount;
 
     Dollar(int amount);
 
