@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "Bank.hpp"
 #include "Money.hpp"
 #include "Sum.hpp"
 
@@ -29,9 +30,11 @@ Expression * Money::plus(Money const & addend)
   return new Sum(*this, addend);
 }
 
-Money Money::reduce(std::string const & toCurrency)
+Money Money::reduce(Bank * bank, std::string const & toCurrency)
 {
-  return *this;
+  int rate = bank->rate(currency, toCurrency);
+
+  return Money(amount / rate, toCurrency);
 }
 
 bool Money::operator==(Money & other) const

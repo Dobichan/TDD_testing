@@ -4,6 +4,8 @@
 
 #include "Expression.hpp"
 
+class Bank;
+
 class Money : public Expression
 {
   public:
@@ -14,7 +16,7 @@ class Money : public Expression
     Money(int amount, std::string const & cureny);
     Money times(int multiplier);
     Expression * plus(Money const & addend);
-    Money reduce(std::string const & toCurrency) override;
+    Money reduce(Bank * bank, std::string const & toCurrency) override;
 
     static Money dollar(int amount);
     static Money franc(int amount);

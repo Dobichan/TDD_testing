@@ -2,6 +2,7 @@
 
 #include "Money.hpp"
 
+class Bank;
 class Money;
 
 class Expression
@@ -9,6 +10,6 @@ class Expression
   public:
     virtual ~Expression() {};
 
-   virtual Money reduce(std::string const & toCurrency) = 0;
+    virtual Money reduce(Bank * bank, std::string const & toCurrency) = 0;
 };
 

@@ -7,8 +7,8 @@ Sum::Sum(Money const & augend, Money const & addend) :
 {
 }
 
-Money Sum::reduce(std::string const & toCurrency)
+Money Sum::reduce(Bank * bank, std::string const & toCurrency)
 {
-  int amount = augend.amount + addend.amount;
+  int amount = augend.reduce(bank, toCurrency).amount + addend.reduce(bank, toCurrency).amount;
   return Money(amount, toCurrency);
 }

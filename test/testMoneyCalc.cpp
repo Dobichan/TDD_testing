@@ -64,6 +64,12 @@ TEST(moneyTests, testReduceSum)
   delete sum;
 }
 
+TEST(moneyTests, testIdentityRate)
+{
+  Bank bank;
+  ASSERT_THAT(bank.rate("USD", "USD"), Eq(1));
+}
+
 TEST(moneyTests, testReduceMoney)
 {
   Bank bank;
@@ -71,4 +77,23 @@ TEST(moneyTests, testReduceMoney)
 
   Money result = bank.reduce(&one, "USD");
   ASSERT_THAT(result, Eq(Money::dollar(1)));
+}
+
+TEST(moneyTests, testReduceMoneyDifferentCurrencies)
+{
+  Bank bank;
+  bank.addRate("CHF", "USD", 2);
+  Money two = Money::franc(2);
+  Money result = bank.reduce(&two, "USD");
+  ASSERT_THAT(result, Eq(Money::dollar(1)));
+}
+
+TEST(moneyTests, testMixedAddition)
+{
+  Money fiveBucks = Money::dollar(5);
+  Money tenFrancs = Money::franc(10);
+  Bank bank;
+  bank.addRate("CHF", "USD", 2);
+  Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
+  ASSERT_THAT(result, Eq(Money::dollar(10)));
 }
