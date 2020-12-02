@@ -1,4 +1,7 @@
+#include <iostream>
+
 #include "Money.hpp"
+#include "Sum.hpp"
 
 Money::Money(int amount, std::string const & currency) :
   amount(amount),
@@ -21,6 +24,16 @@ Money Money::times(int multiplier)
   return Money(amount * multiplier, currency);
 }
 
+Expression * Money::plus(Money const & addend)
+{
+  return new Sum(*this, addend);
+}
+
+Money Money::reduce(std::string const & toCurrency)
+{
+  return *this;
+}
+
 bool Money::operator==(Money & other) const
 {
   return amount == other.amount &&
@@ -41,4 +54,10 @@ bool Money::operator!=(Money & other) const
 bool Money::operator!=(Money const & other) const
 {
   return !(*this == other);
+}
+
+std::ostream & operator<<(std::ostream & os, Money const & money)
+{
+  os << std::string("Money: ") << money.amount << money.currency;
+  return os;
 }

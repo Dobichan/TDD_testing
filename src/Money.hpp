@@ -2,15 +2,19 @@
 
 #include <string>
 
-class Money
+#include "Expression.hpp"
+
+class Money : public Expression
 {
-  private:
+  public:
     int amount;
     std::string currency;
 
   public:
     Money(int amount, std::string const & cureny);
     Money times(int multiplier);
+    Expression * plus(Money const & addend);
+    Money reduce(std::string const & toCurrency) override;
 
     static Money dollar(int amount);
     static Money franc(int amount);
@@ -19,4 +23,6 @@ class Money
     bool operator==(Money const & other) const;
     bool operator!=(Money & other) const;
     bool operator!=(Money const & other) const;
+
+    friend std::ostream & operator<<(std::ostream & os, Money const & money);
 };
